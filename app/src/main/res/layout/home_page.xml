@@ -25,25 +25,25 @@
 
             <ImageView
                 android:id="@+id/imageView5"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/user" />
+                app:srcCompat="@drawable/user"
+                />
 
             <TextView
                 android:id="@+id/UsernameText"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
+                android:layout_weight="4"
+                android:gravity="center_vertical"
                 android:text="Tommy Bui"
                 android:textColor="#000000"
-                android:textSize="34sp"
-                android:layout_gravity=""/>
+                android:textSize="34sp" />
 
             <ImageButton
                 android:id="@+id/SettingButton"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="fitCenter"
