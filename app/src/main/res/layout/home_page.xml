@@ -21,7 +21,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:background="#3498DB"
+            >
 
             <ImageView
                 android:id="@+id/imageView5"

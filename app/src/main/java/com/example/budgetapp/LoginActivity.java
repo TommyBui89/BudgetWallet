@@ -14,12 +14,12 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         // Un comment this to view editing page
-        //setContentView(R.layout.withdraw_page);
+        setContentView(R.layout.home_page);
 
 
         //Remember to comment the code below
-        setContentView(R.layout.sign_in_page);
-        signUpScrChange();
+        //setContentView(R.layout.sign_in_page);
+        //signUpScrChange();
     }
 
 
