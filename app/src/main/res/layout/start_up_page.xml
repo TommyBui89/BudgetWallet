@@ -84,5 +84,11 @@
             android:ems="10"
             android:inputType="date" />
 
+        <Button
+            android:id="@+id/StartButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Start" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
