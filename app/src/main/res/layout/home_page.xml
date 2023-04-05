@@ -40,9 +40,10 @@
 
             <ImageButton
                 android:id="@+id/SettingButton"
-                android:layout_width="24dp"
+                android:layout_width="56dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:scaleType="fitCenter"
                 app:srcCompat="@drawable/setting" />
 
         </LinearLayout>
