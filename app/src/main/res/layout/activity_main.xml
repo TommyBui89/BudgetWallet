@@ -10,9 +10,9 @@
         android:layout_width="395dp"
         android:layout_height="108dp"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="7dp"
-        tools:layout_editor_absoluteY="234dp"
-        tools:ignore="MissingConstraints">
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="284dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -20,7 +20,7 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/editTextTextPersonName"
+                android:id="@+id/EmailTextBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -28,14 +28,6 @@
                 android:inputType="textPersonName"
                 android:text="Email" />
 
-            <EditText
-                android:id="@+id/editTextTextEmailAddress3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textEmailAddress" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -44,7 +36,7 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/editTextTextPersonName2"
+                android:id="@+id/PasswordTextBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -52,13 +44,6 @@
                 android:inputType="textPersonName"
                 android:text="Password" />
 
-            <EditText
-                android:id="@+id/editTextTextPassword3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textPassword" />
         </LinearLayout>
     </LinearLayout>
 
@@ -66,9 +51,9 @@
         android:layout_width="379dp"
         android:layout_height="117dp"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="14dp"
-        tools:layout_editor_absoluteY="505dp"
-        tools:ignore="MissingConstraints">
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="504dp">
 
         <Button
             android:id="@+id/GoogleButton"
@@ -89,19 +74,20 @@
         android:layout_height="wrap_content"
         android:text="Budget Wallet"
         android:textAlignment="center"
+        android:textColor="#000000"
         android:textSize="34sp"
+        tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="101dp"
-        tools:layout_editor_absoluteY="157dp"
-        tools:ignore="MissingConstraints" />
+        tools:layout_editor_absoluteY="201dp" />
 
     <Button
         android:id="@+id/LoginButton"
         android:layout_width="376dp"
         android:layout_height="49dp"
         android:text="Login"
+        tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="17dp"
-        tools:layout_editor_absoluteY="366dp"
-        tools:ignore="MissingConstraints" />
+        tools:layout_editor_absoluteY="410dp" />
 
     <LinearLayout
         android:layout_width="376dp"
@@ -125,7 +111,16 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Sign Up here"
+            android:textColor="#3F51B5"
             android:textSize="20sp" />
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="175dp"
+        android:layout_height="152dp"
+        app:srcCompat="@drawable/budgetwalletlogo"
+        tools:layout_editor_absoluteX="118dp"
+        tools:layout_editor_absoluteY="29dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
