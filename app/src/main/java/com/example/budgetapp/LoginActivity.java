@@ -12,6 +12,13 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Un comment this to view editing page
+        //setContentView(R.layout.withdraw_page);
+
+
+        //Remember to comment the code below
+
         setContentView(R.layout.sign_in_page);
         signUpScrChange();
     }

@@ -99,6 +99,7 @@
             android:id="@+id/GoogleButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#F60000"
             android:text="Google" />
 
         <Button

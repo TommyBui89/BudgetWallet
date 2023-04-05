@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="390dp"
+        android:layout_height="700dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="5dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/user" />
+
+            <TextView
+                android:id="@+id/UsernameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Tommy Bui"
+                android:textColor="#000000" />
+
+            <ImageButton
+                android:id="@+id/SettingButton"
+                android:layout_width="24dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/setting" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Balance"
+            android:textColor="#000000"
+            android:textSize="60sp" />
+
+        <TextView
+            android:id="@+id/Balance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="88888"
+            android:textColor="#000000"
+            android:textSize="34sp" />
+
+        <Button
+            android:id="@+id/TopUpButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Top Up" />
+
+        <Button
+            android:id="@+id/WithdrawButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Withdraw" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
