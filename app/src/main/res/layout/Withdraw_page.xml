@@ -54,7 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Deposit"
+            android:text="Withdraw"
             android:textColor="#020202"
             android:textSize="34sp" />
 
@@ -143,7 +143,7 @@
             android:id="@+id/WithdrawButton1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Deposit" />
+            android:text="Withdraw" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
