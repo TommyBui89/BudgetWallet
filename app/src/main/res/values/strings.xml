@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">BudgetApp</string>
+    <string name="email">Email</string>
+    <string name="login">Login</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="facebook">Facebook</string>
+    <string name="todo">TODO</string>
+    <string name="google">Google</string>
+    <string name="budget_wallet">Budget Wallet</string>
+    <string name="sign_up_here">Sign Up here</string>
+    <string name="password">Password</string>
 </resources>
