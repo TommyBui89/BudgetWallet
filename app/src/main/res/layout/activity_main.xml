@@ -7,12 +7,16 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:layout_width="395dp"
-        android:layout_height="108dp"
+        android:id="@+id/linearLayout"
+        android:layout_width="411dp"
+        android:layout_height="92dp"
+        android:layout_marginTop="34dp"
+        android:layout_marginBottom="34dp"
         android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/LoginButton"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="284dp">
+        tools:layout_editor_absoluteX="3dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,15 +49,17 @@
                 android:text="Password" />
 
         </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="379dp"
-        android:layout_height="117dp"
+        android:layout_width="373dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="40dp"
         android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="504dp">
+        tools:layout_editor_absoluteX="22dp">
 
         <Button
             android:id="@+id/GoogleButton"
@@ -72,30 +78,29 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="101dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="101dp"
         android:text="Budget Wallet"
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="34sp"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="101dp"
-        tools:layout_editor_absoluteY="201dp" />
-
-    <Button
-        android:id="@+id/LoginButton"
-        android:layout_width="376dp"
-        android:layout_height="49dp"
-        android:text="Login"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="17dp"
-        tools:layout_editor_absoluteY="410dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        tools:ignore="MissingConstraints" />
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="376dp"
         android:layout_height="70dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="19dp"
         android:orientation="horizontal"
-        tools:ignore="MissingConstraints,TextSizeCheck"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="661dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints,TextSizeCheck">
 
         <TextView
             android:id="@+id/textView4"
@@ -119,8 +124,25 @@
         android:id="@+id/imageView"
         android:layout_width="175dp"
         android:layout_height="152dp"
-        app:srcCompat="@drawable/budgetwalletlogo"
-        tools:layout_editor_absoluteX="118dp"
-        tools:layout_editor_absoluteY="29dp" />
+        android:layout_marginStart="118dp"
+        android:layout_marginTop="29dp"
+        android:layout_marginEnd="118dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/budgetwalletlogo" />
+
+    <Button
+        android:id="@+id/LoginButton"
+        android:layout_width="wrap_content"
+        android:layout_height="49dp"
+        android:layout_marginStart="161dp"
+        android:layout_marginTop="34dp"
+        android:layout_marginEnd="162dp"
+        android:text="Login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
