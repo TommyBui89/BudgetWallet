@@ -18,7 +18,6 @@ public class LoginActivity extends AppCompatActivity {
 
 
         //Remember to comment the code below
-
         setContentView(R.layout.sign_in_page);
         signUpScrChange();
     }
