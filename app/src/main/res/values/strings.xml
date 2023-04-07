@@ -18,5 +18,11 @@
     <string name="sign_up">Sign Up</string>
     <string name="already_have_account">Already have account ?</string>
     <string name="sign_in">Sign In</string>
+    <string name="first_name">First Name</string>
+    <string name="given_name">Given name</string>
+    <string name="budget">Budget</string>
+    <string name="date">Date</string>
+    <string name="set_up_account">Set up Account</string>
+    <string name="start">Start</string>
 
 </resources>
