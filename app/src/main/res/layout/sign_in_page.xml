@@ -84,12 +84,11 @@
 
     <LinearLayout
         android:id="@+id/linearLayout3"
-        android:layout_width="373dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:orientation="vertical"
+        android:layout_marginHorizontal="20dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -98,8 +97,7 @@
         <Button
             android:id="@+id/GoogleButton"
             android:layout_width="match_parent"
-            android:layout_height="38dp"
-            android:background="#F60000"
+            android:layout_height="wrap_content"
             android:text="Google" />
 
         <Button
@@ -111,10 +109,11 @@
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="376dp"
-        android:layout_height="70dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="19dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -126,19 +125,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Don't have an account?"
-            android:textSize="20sp" />
+            android:text="Don't have an account?"/>
 
         <TextView
             android:id="@+id/SignUpHereButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Sign Up here"
-            android:textColor="#3F51B5"
-            android:textSize="20sp"
+            android:clickable="true"
             android:onClick="signUpScrChange"
-            android:clickable="true"/>
+            android:text="Sign Up here"
+            android:textColor="#3F51B5"/>
 
     </LinearLayout>
 
