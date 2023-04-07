@@ -30,7 +30,7 @@ import java.util.Map;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    TextInputEditText usernameID, emailID, passwordID, confirmPasswordID;
+    TextInputEditText emailID, passwordID, confirmPasswordID;
     String userDBID;
     Button signUpBTN;
 
@@ -45,7 +45,6 @@ public class SignUpActivity extends AppCompatActivity {
 
 
         // Initialize the variables
-        usernameID = findViewById(R.id.username);
         emailID = findViewById(R.id.email);
         passwordID = findViewById(R.id.password);
         confirmPasswordID = findViewById(R.id.confirmPassword);
@@ -54,18 +53,12 @@ public class SignUpActivity extends AppCompatActivity {
         signUpBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username, email, password, confirmPassword;
-                username = String.valueOf(usernameID.getText());
+                String email, password, confirmPassword;
                 email = String.valueOf(emailID.getText());
                 password = String.valueOf(passwordID.getText());
                 confirmPassword = String.valueOf(confirmPasswordID.getText());
 
                 signInScrChange();
-
-                if(TextUtils.isEmpty(username)) {
-                    Toast.makeText(SignUpActivity.this, "Please enter your username", Toast.LENGTH_SHORT).show();
-                    return;
-                }
                 if(TextUtils.isEmpty(email)) {
                     Toast.makeText(SignUpActivity.this, "Please enter your email", Toast.LENGTH_SHORT).show();
                     return;
