@@ -13,5 +13,10 @@
     <!-- Facebook Auth-->
     <string name="facebook_application_id" translatable="false">3121045928188050</string>
     <string name="facebook_login_protocol_scheme" translatable="false">fb3121045928188050</string>
+    <string name="username">Username</string>
+    <string name="confirmPassword">Confirm Password</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="already_have_account">Already have account ?</string>
+    <string name="sign_in">Sign In</string>
 
 </resources>
