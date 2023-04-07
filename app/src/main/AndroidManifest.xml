@@ -11,11 +11,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BudgetApp"
         tools:targetApi="31">
+
+
         <activity
-            android:name=".StartUpActivity"
+            android:name=".DepositActivity"
             android:exported="false" />
         <activity
-            android:name=".SignUpActivity"
+            android:name=".HistoryActivity"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
@@ -26,6 +28,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".StartUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".WithdrawActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

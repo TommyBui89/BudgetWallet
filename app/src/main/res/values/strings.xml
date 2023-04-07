@@ -9,4 +9,9 @@
     <string name="budget_wallet">Budget Wallet</string>
     <string name="sign_up_here">Sign Up here</string>
     <string name="password">Password</string>
+
+    <!-- Facebook Auth-->
+    <string name="facebook_application_id" translatable="false">3121045928188050</string>
+    <string name="facebook_login_protocol_scheme" translatable="false">fb3121045928188050</string>
+
 </resources>

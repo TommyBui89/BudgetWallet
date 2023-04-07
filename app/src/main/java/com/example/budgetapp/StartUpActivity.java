@@ -24,7 +24,7 @@ public class StartUpActivity extends AppCompatActivity {
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(StartUpActivity.this, LoginActivity.class);
+                Intent intent = new Intent(StartUpActivity.this, MainActivity.class);
                 startActivity(intent);
             }
         });
