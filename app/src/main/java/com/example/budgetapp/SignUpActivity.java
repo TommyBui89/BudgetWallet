@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.budgetapp.Model.Users;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -84,13 +85,13 @@ public class SignUpActivity extends AppCompatActivity {
                                     // Sign Up success, update UI with the signed-in user's information
                                     FirebaseUser user = mAuth.getCurrentUser();
                                     userDBID=user.getUid();
-                                    syncToFirestore(userDBID);
+                                    syncToFirestore();
 
                                     Toast.makeText(SignUpActivity.this, "Successful",Toast.LENGTH_SHORT).show();
                                     setUpScrChange();
                                 } else {
                                     // If sign Up fails, display a message to the user.
-                                    Toast.makeText(SignUpActivity.this, "Authentication failed.",
+                                    Toast.makeText(SignUpActivity.this, task.getException().getLocalizedMessage(),
                                             Toast.LENGTH_SHORT).show();
                                 }
                             }
@@ -130,15 +131,14 @@ userId (document)
     Phone: String
 
 * */
-    private void syncToFirestore(String userDBID) {
-    Map<String, Object> User = new HashMap<>();
-    User.put("email", emailID.getText().toString());
-    User.put("password", passwordID.getText().toString());
-
-
+    private void syncToFirestore() {
+        Users user = new Users();
+        assert user != null;
+        user.setUserID(mAuth.getCurrentUser().getUid());
+        user.setEmail(emailID.getText().toString());
+        user.setPassword(passwordID.getText().toString());
     CollectionReference usersRef =db.collection("UserCollection");
-    usersRef.document(userDBID).set(User);
-
+    usersRef.document(user.getUserID()).set(user);
     }
 }
 
