@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -106,8 +107,7 @@ public class StartUpActivity extends AppCompatActivity {
                     return;
                 }
 
-                syncToFirestore();
-                finishSetup();
+                uploadImage();
             }
         });
 
@@ -119,7 +119,7 @@ public class StartUpActivity extends AppCompatActivity {
         if (requestCode==11 && resultCode == RESULT_OK && data !=null){
             imageURL=data.getData();
             getImageInImageView();
-            
+
         }
     }
 
@@ -134,37 +134,66 @@ public class StartUpActivity extends AppCompatActivity {
 
     }
 
-    private void finishSetup() {
-        Intent intent = new Intent(StartUpActivity.this, MainActivity.class);
-        startActivity(intent);
-
-    }
-
     /*
      * Schema
-     * 
+     *
      * userId (document)
      * Email: String
      * FirstName: String
      * GivenName: String
      * Password: String
      * Phone: String
-     * 
+     *
      */
     private void updateProfilePicURL(String url){
 
         Users user = new Users();
     }
-    private void syncToFirestore() {
+    private void syncToFirestore(String url) {
+
+        Bundle bundle = getIntent().getExtras();
 
         Users user = new Users();
         user.setFirstName(firstNameID.getText().toString());
         user.setLastName(givennameID.getText().toString());
         user.setPhone(phoneID.getText().toString());
+        user.setUserID(bundle.getString("id"));
+        user.setEmail(bundle.getString("email"));
+        user.setPassword(bundle.getString("password"));
+        user.setProfilePic(url);
 
         CollectionReference usersRef =db.collection("UserCollection");
         usersRef.document(user.getUserID()).set(user);
+
+        Intent intent = new Intent(StartUpActivity.this, MainActivity.class);
+        startActivity(intent);
     }
 
+    private void uploadImage(){
+        FirebaseStorage.getInstance().getReference("image/"+UUID.randomUUID()).putFile(imageURL).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                if(task.isSuccessful()){
 
+                    Toast.makeText(StartUpActivity.this, "Uploading Data...", Toast.LENGTH_SHORT).show();
+                    task.getResult().getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Uri> task) {
+                            Log.v("Check",task.getResult().toString());
+                            if (task.isSuccessful()){
+
+                                Toast.makeText(StartUpActivity.this, "Welcome.", Toast.LENGTH_SHORT).show();
+                                syncToFirestore(task.getResult().toString());
+                            }else {
+                                Toast.makeText(StartUpActivity.this,task.getException().getLocalizedMessage(),Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
+                else {
+                    Toast.makeText(StartUpActivity.this,task.getException().getLocalizedMessage(),Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
 }
