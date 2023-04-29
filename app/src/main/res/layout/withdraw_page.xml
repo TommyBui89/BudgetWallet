@@ -9,22 +9,21 @@
         android:id="@+id/ExitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="301dp"
-        android:layout_marginTop="16dp"
         android:text="Exit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout7" />
 
     <LinearLayout
+        android:id="@+id/linearLayout7"
         android:layout_width="390dp"
         android:layout_height="663dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ExitButton">
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:id="@+id/textView17"
@@ -64,16 +63,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:gravity="center"
             android:inputType="number"
-            android:textSize="34sp"
-            android:gravity="center"/>
+            android:textSize="34sp" />
 
         <TextView
             android:id="@+id/textView20"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Reason"
             android:gravity="center"
+            android:text="Reason"
             android:textSize="20sp" />
 
         <EditText

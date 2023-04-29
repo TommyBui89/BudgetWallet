@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.budgetapp.Model.Users;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -36,13 +37,11 @@ public class SignUpActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_up_page);
-
-
 
         // Initialize the variables
         emailID = findViewById(R.id.email);
@@ -58,20 +57,19 @@ public class SignUpActivity extends AppCompatActivity {
                 password = String.valueOf(passwordID.getText());
                 confirmPassword = String.valueOf(confirmPasswordID.getText());
 
-                signInScrChange();
-                if(TextUtils.isEmpty(email)) {
+                if (TextUtils.isEmpty(email)) {
                     Toast.makeText(SignUpActivity.this, "Please enter your email", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(TextUtils.isEmpty(password)) {
+                if (TextUtils.isEmpty(password)) {
                     Toast.makeText(SignUpActivity.this, "Please enter your password", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(TextUtils.isEmpty(confirmPassword)) {
+                if (TextUtils.isEmpty(confirmPassword)) {
                     Toast.makeText(SignUpActivity.this, "Please confirm your password", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(!password.equals(confirmPassword)) {
+                if (!password.equals(confirmPassword)) {
                     Toast.makeText(SignUpActivity.this, "Password does not match", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -83,63 +81,33 @@ public class SignUpActivity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     // Sign Up success, update UI with the signed-in user's information
                                     FirebaseUser user = mAuth.getCurrentUser();
-                                    userDBID=user.getUid();
-                                    syncToFirestore(userDBID);
+                                    userDBID = user.getUid();
 
-                                    Toast.makeText(SignUpActivity.this, "Successful",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(SignUpActivity.this, "Successful", Toast.LENGTH_SHORT).show();
                                     setUpScrChange();
                                 } else {
                                     // If sign Up fails, display a message to the user.
-                                    Toast.makeText(SignUpActivity.this, "Authentication failed.",
+                                    Toast.makeText(SignUpActivity.this, task.getException().getLocalizedMessage(),
                                             Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
             }
-
-
-
         });
     }
 
-    private void signInScrChange() {
-        TextView textView = findViewById(R.id.SignIn);
-
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+    public void signInScrChange(View view) {
+        finish();
     }
 
     private void setUpScrChange() {
         Intent intent = new Intent(SignUpActivity.this, StartUpActivity.class);
+        Bundle user = new Bundle();
+        user.putString("id", mAuth.getCurrentUser().getUid());
+        user.putString("email", emailID.getText().toString());
+        user.putString("password", passwordID.getText().toString());
+        intent.putExtras(user);
         startActivity(intent);
         finish();
     }
-    
-
-    /*  Schema
-    
-userId (document)
-    Email: String
-    FirstName: String
-    GivenName: String
-    Password: String
-    Phone: String
-
-* */
-    private void syncToFirestore(String userDBID) {
-    Map<String, Object> User = new HashMap<>();
-    User.put("email", emailID.getText().toString());
-    User.put("password", passwordID.getText().toString());
-
-
-    CollectionReference usersRef =db.collection("UserCollection");
-    usersRef.document(userDBID).set(User);
-
-    }
 }
-
-
