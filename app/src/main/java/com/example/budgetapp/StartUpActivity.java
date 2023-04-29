@@ -3,10 +3,15 @@ package com.example.budgetapp;
 import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -14,16 +19,28 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.canhub.cropper.CropImage;
+import com.example.budgetapp.Model.Users;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class StartUpActivity extends AppCompatActivity {
 
@@ -31,6 +48,15 @@ public class StartUpActivity extends AppCompatActivity {
     Button startBTN;
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+    CircleImageView profileImageView;
+
+    Uri imageURL;
+
+
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    // Create a storage reference from our app
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +72,23 @@ public class StartUpActivity extends AppCompatActivity {
 
         startBTN = findViewById(R.id.StartButton);
 
+        profileImageView = findViewById(R.id.avt);
+
+        profileImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent photoIntent = new Intent(Intent.ACTION_PICK);
+                photoIntent.setType("image/*");
+                startActivityForResult(photoIntent,11);
+            }
+        });
+
         startBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String userDBID, firstName, givenName, phone;
+
+
+                String firstName, givenName, phone;
                 firstName = String.valueOf(firstNameID.getText());
                 givenName = String.valueOf(givennameID.getText());
                 phone = String.valueOf(phoneID.getText());
@@ -68,41 +107,93 @@ public class StartUpActivity extends AppCompatActivity {
                     return;
                 }
 
-
-                userDBID=mAuth.getInstance().getCurrentUser().getUid();
-                syncToFirestore(userDBID);
-                finishSetup();
+                uploadImage();
             }
         });
 
     }
 
-    private void finishSetup() {
-        Intent intent = new Intent(StartUpActivity.this, MainActivity.class);
-        startActivity(intent);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==11 && resultCode == RESULT_OK && data !=null){
+            imageURL=data.getData();
+            getImageInImageView();
+
+        }
+    }
+
+    private void getImageInImageView() {
+        Bitmap bitmap = null;
+        try {
+            bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),imageURL);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        profileImageView.setImageBitmap(bitmap);
 
     }
 
     /*
      * Schema
-     * 
+     *
      * userId (document)
      * Email: String
      * FirstName: String
      * GivenName: String
      * Password: String
      * Phone: String
-     * 
+     *
      */
-    private void syncToFirestore(String userDBID) {
-        Map<String, Object> User = new HashMap<>();
-        User.put("FirstName", firstNameID.getText().toString());
-        User.put("GivenName", givennameID.getText().toString());
-        User.put("Phone", phoneID.getText().toString());
+    private void updateProfilePicURL(String url){
 
+        Users user = new Users();
+    }
+    private void syncToFirestore(String url) {
+
+        Bundle bundle = getIntent().getExtras();
+
+        Users user = new Users();
+        user.setFirstName(firstNameID.getText().toString());
+        user.setLastName(givennameID.getText().toString());
+        user.setPhone(phoneID.getText().toString());
+        user.setUserID(bundle.getString("id"));
+        user.setEmail(bundle.getString("email"));
+        user.setPassword(bundle.getString("password"));
+        user.setProfilePic(url);
 
         CollectionReference usersRef =db.collection("UserCollection");
-        usersRef.document(userDBID).update(User);
+        usersRef.document(user.getUserID()).set(user);
+
+        Intent intent = new Intent(StartUpActivity.this, MainActivity.class);
+        startActivity(intent);
     }
 
+    private void uploadImage(){
+        FirebaseStorage.getInstance().getReference("image/"+UUID.randomUUID()).putFile(imageURL).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                if(task.isSuccessful()){
+
+                    Toast.makeText(StartUpActivity.this, "Uploading Data...", Toast.LENGTH_SHORT).show();
+                    task.getResult().getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Uri> task) {
+                            Log.v("Check",task.getResult().toString());
+                            if (task.isSuccessful()){
+
+                                Toast.makeText(StartUpActivity.this, "Welcome.", Toast.LENGTH_SHORT).show();
+                                syncToFirestore(task.getResult().toString());
+                            }else {
+                                Toast.makeText(StartUpActivity.this,task.getException().getLocalizedMessage(),Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
+                else {
+                    Toast.makeText(StartUpActivity.this,task.getException().getLocalizedMessage(),Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
 }

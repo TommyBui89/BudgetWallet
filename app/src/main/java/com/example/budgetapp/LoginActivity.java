@@ -81,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
                         mainScrChange();
                     } else {
                         // If sign in fails, display a message to the user.
-                        Toast.makeText(LoginActivity.this, "Authentication failed. Pls try again", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
