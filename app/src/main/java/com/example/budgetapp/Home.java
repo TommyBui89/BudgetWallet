@@ -71,7 +71,9 @@ public class Home extends Fragment {
         avatar=view.findViewById(R.id.avt);
         name=view.findViewById(R.id.UsernameText);
 
-        Picasso.get().load(url).into(avatar);
+        if(url!=null) {
+            Picasso.get().load(url).into(avatar);
+        }
         name.setText(firstName+' '+lastName);
 
         return view;

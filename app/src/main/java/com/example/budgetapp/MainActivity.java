@@ -54,14 +54,10 @@ public class MainActivity extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         createBundleFromFirestore(document, bundle);
-                        Log.d("out", bundle.getString("phone"));
                         replaceFrame(new Home(), bundle);
                     } else {
-                        Log.d(TAG, "No such document");
                     }
-                } else {
-                    Log.d(TAG, "get failed with ", task.getException());
-                }
+                } else {}
             }
         });
 
@@ -112,10 +108,7 @@ public class MainActivity extends AppCompatActivity {
             bundle.putString("password", password);
             bundle.putString("phone", phone);
             bundle.putString("email", email);
-            Log.d("main", "pass done");
-            Log.d("main", url);
         } else {
-            Log.d(TAG, "No such document");
         }
     }
 }
