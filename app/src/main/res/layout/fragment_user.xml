@@ -87,10 +87,10 @@
             android:layout_height="wrap_content">
             <com.google.android.material.textfield.TextInputEditText
                 android:singleLine="true"
-                android:id="@+id/MaxLimitTextbox"
+                android:id="@+id/BalanceTextBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Max Limit"/>
+                android:hint="Balance"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout

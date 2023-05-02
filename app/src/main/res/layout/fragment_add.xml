@@ -38,12 +38,12 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/select"
+            android:hint="select"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
             >
 
             <AutoCompleteTextView
-                android:id="@+id/auto_complete_txt"
+                android:id="@+id/auto_complete_textview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="none"/>
