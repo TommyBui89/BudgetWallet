@@ -78,7 +78,8 @@
                 android:id="@+id/Budget"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/budget" />
+                android:hint="Budget for Month"
+                android:inputType="number"/>
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -87,10 +88,11 @@
             android:layout_height="wrap_content">
             <com.google.android.material.textfield.TextInputEditText
                 android:singleLine="true"
-                android:id="@+id/maxbudget"
+                android:id="@+id/Balance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Max Budget" />
+                android:hint="Balance"
+                android:inputType="number"/>
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -100,7 +102,8 @@
                 android:id="@+id/phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Phone" />
+                android:hint="Phone"
+                android:inputType="number"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button

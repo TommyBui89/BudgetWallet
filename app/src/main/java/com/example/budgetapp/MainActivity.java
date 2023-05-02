@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         binding.bottomNavigation.setOnItemSelectedListener(item -> {
+
             switch (item.getItemId()) {
                 case R.id.homeFrag:
                     replaceFrame(new Home(), bundle);
