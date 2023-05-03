@@ -21,7 +21,6 @@ public class user extends Fragment {
     // Declare the sign out button
     private Button btnSignOut;
     private FirebaseAuth mAuth; // Firebase Authentication instance
-
     // ...
 
     String url, email, password, firstName, lastName, phone, budget;

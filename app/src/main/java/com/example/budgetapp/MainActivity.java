@@ -31,10 +31,6 @@ public class MainActivity extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     CollectionReference usersRef = db.collection("UserCollection");
 
-    //drop down list
-    String[] item = {"Deposit", "Withdraw"};
-    AutoCompleteTextView autoCompleteTextView;
-    ArrayAdapter<String> adapterItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,20 +78,7 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
 
-        //drop down list
-        autoCompleteTextView = findViewById(R.id.auto_complete_textview);
 
-        adapterItems = new ArrayAdapter<String>(this,R.layout.list_item, item);
-
-        autoCompleteTextView.setAdapter(adapterItems);
-
-        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String item = adapterView.getItemAtPosition(i).toString();
-                Toast.makeText(MainActivity.this, "item " + item, Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
 
