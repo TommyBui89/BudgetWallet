@@ -48,6 +48,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class add extends Fragment {
     String url, firstName, lastName, email, phone, password, id;
+    long timestamp;
     TextInputEditText amount, notes, date;
     Button submitBTN;
 
@@ -148,18 +149,37 @@ public class add extends Fragment {
                 String notesStr = notes.getText().toString().trim();
                 String dateStr = date.getText().toString().trim();
 
+                int month,year;
+
+                timestamp = System.currentTimeMillis();
+                month =Integer.parseInt(dateStr.substring(3,5));
+                year = Integer.parseInt(dateStr.substring(6,10));
+
+                Date date = new Date();
+                SimpleDateFormat formatter = new SimpleDateFormat("MM-yyyy");
+                String formattedDate = formatter.format(date);
+                int currentMonth = Integer.parseInt(formattedDate.substring(0,2));
+                int currentYear = Integer.parseInt(formattedDate.substring(3,7));
+
                 if (category.isEmpty() || amountStr.isEmpty() || dateStr.isEmpty()) {
                     Toast.makeText(getContext(), "Please fill all fields.", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                double amount = Double.parseDouble(amountStr);
 
+                if(month>currentMonth && year>currentYear){
+                    Toast.makeText(getContext(), "Cannot add transaction for next month", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                double amount = Double.parseDouble(amountStr);
+                if (!category.equals("Income")) {
+                    amount = -amount;
+                }
                 // Create a new transaction object
 
-                Transaction transaction = new Transaction(category, amount, notesStr, dateStr);
+                Transaction transaction = new Transaction(category, amount, notesStr, dateStr,timestamp);
 
                 // Add the transaction to Firestore
-                db.collection("transactions").document(id).collection("userTransactions").add(transaction).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                db.collection("transactions").document(id).collection(month+"-"+year).add(transaction).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Toast.makeText(getContext(), "Transaction added successfully.", Toast.LENGTH_SHORT).show();
@@ -198,6 +218,7 @@ public class add extends Fragment {
                 }
                 if (categories.isEmpty()) {
                     // Add default categories
+                    categories.add("Income");
                     categories.add("Food");
                     categories.add("Entertainment");
                     categories.add("Shopping");

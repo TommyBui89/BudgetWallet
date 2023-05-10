@@ -17,9 +17,6 @@
             android:name=".DepositActivity"
             android:exported="false" />
         <activity
-            android:name=".HistoryActivity"
-            android:exported="false" />
-        <activity
             android:name=".StartUpActivity"
             android:exported="false" />
         <activity
@@ -36,9 +33,6 @@
             android:exported="false" />
         <activity
             android:name=".SignUpActivity"
-            android:exported="false" />
-        <activity
-            android:name=".WithdrawActivity"
             android:exported="false" />
     </application>
 
