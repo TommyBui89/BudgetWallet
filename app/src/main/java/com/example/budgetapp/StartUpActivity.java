@@ -53,11 +53,6 @@ public class StartUpActivity extends AppCompatActivity {
 
     Uri imageURL;
 
-
-    FirebaseStorage storage = FirebaseStorage.getInstance();
-    // Create a storage reference from our app
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
