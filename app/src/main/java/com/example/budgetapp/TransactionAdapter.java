@@ -67,9 +67,30 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     public void onBindViewHolder(@NonNull TransactionViewHolder holder, int position) {
         Transaction transaction = transactions.get(position);
         holder.categoryTextView.setText(transaction.getCategory());
-        holder.amountTextView.setText(String.valueOf(transaction.getAmount()));
+        holder.amountTextView.setText("$ "+String.valueOf(transaction.getAmount()));
         holder.dateTextView.setText(transaction.getDate());
         holder.noteTextView.setText(transaction.getNotes());
+
+        switch (transaction.getCategory()) {
+            case "Income":
+                holder.itemView.setBackgroundResource(R.color.incomeColor);
+                break;
+            case "Food":
+                holder.itemView.setBackgroundResource(R.color.foodColor);
+                break;
+            case "Entertainment":
+                holder.itemView.setBackgroundResource(R.color.entertainmentColor);
+                break;
+            case "Shopping":
+                holder.itemView.setBackgroundResource(R.color.shoppingColor);
+                break;
+            case "Rent":
+                holder.itemView.setBackgroundResource(R.color.rentColor);
+                break;
+            case "Other":
+                holder.itemView.setBackgroundResource(R.color.expenseColor);
+                break;
+        }
     }
 
     @Override
