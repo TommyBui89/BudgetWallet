@@ -7,12 +7,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.example.budgetapp.Model.Users;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -35,6 +38,8 @@ public class SignUpActivity extends AppCompatActivity {
     String userDBID;
     Button signUpBTN;
 
+    ToggleButton passwordToggleButton;
+
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -48,6 +53,22 @@ public class SignUpActivity extends AppCompatActivity {
         passwordID = findViewById(R.id.password);
         confirmPasswordID = findViewById(R.id.confirmPassword);
         signUpBTN = findViewById(R.id.SignUpButton);
+        passwordToggleButton = (ToggleButton) findViewById(R.id.hideBtn);
+
+        //toggle hide password onClick
+        passwordToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                int inputType = isChecked ? InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD :
+                        InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD;
+                passwordID.setInputType(inputType);
+                confirmPasswordID.setInputType(inputType);
+
+                // Update the button icon
+                int drawableId = isChecked ? R.drawable.ic_hide_password : R.drawable.ic_show_password;
+                passwordToggleButton.setCompoundDrawablesWithIntrinsicBounds(drawableId, 0, 0, 0);
+            }
+        });
 
         signUpBTN.setOnClickListener(new View.OnClickListener() {
             @Override

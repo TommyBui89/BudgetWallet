@@ -3,9 +3,12 @@ package com.example.budgetapp;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,6 +35,8 @@ public class LoginActivity extends AppCompatActivity {
     Button loginBTNID,googleBTN;
     ProgressDialog progressDialog;
 
+    ToggleButton passwordToggleButton;
+
     GoogleSignInClient mGoogleSignInClient;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +52,9 @@ public class LoginActivity extends AppCompatActivity {
         loginBTNID = findViewById(R.id.LoginButton);
         googleBTN = findViewById(R.id.GoogleButton);
 
+        //Toggle hide button
+        passwordToggleButton = (ToggleButton) findViewById(R.id.hideBtn);
+
         mAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(LoginActivity.this);
         progressDialog.setTitle("Creating Account");
@@ -61,6 +69,21 @@ public class LoginActivity extends AppCompatActivity {
                 signInUsingGoogle();
             }
         });
+
+        passwordToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                int inputType = isChecked ? InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD :
+                        InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD;
+                passwordID.setInputType(inputType);
+
+                // Update the button icon
+                int drawableId = isChecked ? R.drawable.ic_hide_password : R.drawable.ic_show_password;
+                passwordToggleButton.setCompoundDrawablesWithIntrinsicBounds(drawableId, 0, 0, 0);
+            }
+        });
+
+
         loginBTNID.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){

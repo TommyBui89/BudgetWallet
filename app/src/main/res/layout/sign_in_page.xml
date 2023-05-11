@@ -51,25 +51,43 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <com.google.android.material.textfield.TextInputEditText
-                android:singleLine="true"
                 android:id="@+id/email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/email"/>
+                android:hint="@string/email"
+                android:singleLine="true" />
+
         </com.google.android.material.textfield.TextInputLayout>
+
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/password">
+
             <com.google.android.material.textfield.TextInputEditText
-                android:singleLine="true"
                 android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                app:passwordToggleEnabled="true"/>
+                android:singleLine="true"
+                app:passwordToggleEnabled="true" />
+
+
         </com.google.android.material.textfield.TextInputLayout>
+
+        <ToggleButton
+            android:id="@+id/hideBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/password"
+            android:layout_alignEnd="@+id/password"
+            android:layout_alignBottom="@+id/password"
+            android:background="@null"
+            android:drawableLeft="@drawable/ic_hide_password"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp" />
 
     </LinearLayout>
 

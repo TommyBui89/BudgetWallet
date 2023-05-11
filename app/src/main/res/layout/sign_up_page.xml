@@ -63,26 +63,37 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <com.google.android.material.textfield.TextInputEditText
-                android:singleLine="true"
                 android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/password"/>
+                android:inputType="textPassword"
+                android:singleLine="true"
+                android:hint="Password"
+                app:passwordToggleEnabled="true" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <com.google.android.material.textfield.TextInputEditText
-                android:singleLine="true"
                 android:id="@+id/confirmPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/confirmPassword"/>
+                android:inputType="textPassword"
+                android:singleLine="true"
+                android:hint="Confirm Password"
+                app:passwordToggleEnabled="true" />
+
         </com.google.android.material.textfield.TextInputLayout>
 
 
-
+        <ToggleButton
+            android:id="@+id/hideBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:text="ToggleButton" />
 
         <Button
             android:id="@+id/SignUpButton"
