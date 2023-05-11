@@ -7,11 +7,4 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="incomeColor">#BCE29E</color>
-    <color name="expenseColor">#FF6D60</color>
-    <color name="foodColor">#F3E99F</color>
-    <color name="entertainmentColor">#FEBE8C</color>
-    <color name="shoppingColor">#FAD9A1</color>
-    <color name="rentColor">#F7D060</color>
-
 </resources>
