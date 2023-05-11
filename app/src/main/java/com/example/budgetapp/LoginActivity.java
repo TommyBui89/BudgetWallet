@@ -84,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
                 });
             }
         });
-        
+
     }
     int RC_SIGN_IN = 123;
     private void signInUsingGoogle() {
