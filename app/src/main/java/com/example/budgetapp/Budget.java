@@ -59,7 +59,7 @@ public class Budget extends Fragment {
     CircleImageView avatar;
     TextView name;
     Button nextMonthBTN, previousMonthBTN;
-    TextView monthTextView;
+    TextView monthTextView, noDataTextView;
 
     Map<String, Float> categoryMap = new HashMap<>();
 
@@ -111,6 +111,8 @@ public class Budget extends Fragment {
         previousMonthBTN = view.findViewById(R.id.PreviousMonth);
         nextMonthBTN = view.findViewById(R.id.NextMonth);
 
+        noDataTextView = view.findViewById(R.id.noDataTextView);
+
         queryMonthString = queryMonth + "-" + queryYear;
 
         monthTextView.setText(queryMonthString);
@@ -136,6 +138,68 @@ public class Budget extends Fragment {
             }
         });
 
+        // Button click even to change month query
+        previousMonthBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (queryMonth == 1) {
+                    queryMonth = 12;
+                    queryYear--;
+                } else {
+                    queryMonth--;
+                }
+                queryMonthString = queryMonth + "-" + queryYear;
+                monthTextView.setText(queryMonthString);
+                categoryMap.clear();
+                getCategory(new CategoryCallback() {
+                    @Override
+                    public void onCategories(List<String> categories) {
+                        for (String category : categories) {
+                            getTotal(queryMonthString, category, new TotalCallback() {
+                                @Override
+                                public void onTotal(float total) {
+                                    categoryMap.put(category, total);
+                                    if (categoryMap.size() == categories.size()) {
+                                        createPieChart(categoryMap);
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        });
+
+        nextMonthBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (queryMonth == 12) {
+                    queryMonth = 1;
+                    queryYear++;
+                } else {
+                    queryMonth++;
+                }
+                queryMonthString = queryMonth + "-" + queryYear;
+                monthTextView.setText(queryMonthString);
+                categoryMap.clear();
+                getCategory(new CategoryCallback() {
+                    @Override
+                    public void onCategories(List<String> categories) {
+                        for (String category : categories) {
+                            getTotal(queryMonthString, category, new TotalCallback() {
+                                @Override
+                                public void onTotal(float total) {
+                                    categoryMap.put(category, total);
+                                    if (categoryMap.size() == categories.size()) {
+                                        createPieChart(categoryMap);
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        });
 
 
         return view;
@@ -163,6 +227,7 @@ public class Budget extends Fragment {
             }
         });
     }
+
     public interface TotalCallback {
         void onTotal(float total);
     }
@@ -184,6 +249,7 @@ public class Budget extends Fragment {
             }
         });
     }
+
     public interface CategoryCallback {
         void onCategories(List<String> categories);
     }
@@ -193,6 +259,7 @@ public class Budget extends Fragment {
         List<PieEntry> pieEntries = new ArrayList<>();
         List<Integer> colors = new ArrayList<>();
         List<LegendEntry> legendEntries = new ArrayList<>();
+        float totalExpense = 0;
 
 
         for (Map.Entry<String, Float> entry : categoryMap.entrySet()) {
@@ -203,7 +270,21 @@ public class Budget extends Fragment {
                 // Add a corresponding color for each legend entry
                 int color = ColorTemplate.COLORFUL_COLORS[colors.size() % ColorTemplate.COLORFUL_COLORS.length];
                 colors.add(color);
+                totalExpense += value;
             }
+        }
+
+        if (pieEntries.isEmpty()) {
+            // Display the noDataTextView when there is no data
+            noDataTextView.setText("No data for " + queryMonthString + "");
+            noDataTextView.setVisibility(View.VISIBLE);
+            pieChart.clear();
+            pieChart.invalidate();
+            return;
+        } else {
+            // Hide the noDataTextView when there is data
+            noDataTextView.setText("$ "+ totalExpense);
+            noDataTextView.setVisibility(View.VISIBLE);
         }
 
 
@@ -212,15 +293,11 @@ public class Budget extends Fragment {
         dataSet.setValueTextSize(20f);
 
 
-
-
         PieData data = new PieData(dataSet);
         pieChart.setHoleRadius(20f); // Decrease the radius of the hole (center of the pie)
         pieChart.setTransparentCircleRadius(20f); // Decrease the radius of the transparent circle around the pie
         pieChart.getDescription().setEnabled(false); // Hide the chart description
         pieChart.setDrawEntryLabels(false); // Hide the labels on the pie slices
-
-
 
 
         for (int i = 0; i < pieEntries.size(); i++) {
@@ -242,7 +319,6 @@ public class Budget extends Fragment {
         legend.setTextSize(15f); // Increase the size of the legend labels
         legend.setOrientation(Legend.LegendOrientation.HORIZONTAL); // Set the legend orientation to vertical
         legend.setWordWrapEnabled(true); // Enable word wrap for legend labels
-
 
 
         // Configure the pieChart
