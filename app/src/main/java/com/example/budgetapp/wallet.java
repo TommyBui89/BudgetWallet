@@ -44,13 +44,13 @@ public class wallet extends Fragment {
 
     String url, firstName, lastName, email, phone, password, id, balance;
     Button nextMonthBTN, previousMonthBTN;
-    TextView monthTextView,displayTV,shoBalanceTextView,availableBalanceTextView;
+    TextView monthTextView, displayTV, shoBalanceTextView, availableBalanceTextView;
 
     Date date = new Date();
     SimpleDateFormat formatter = new SimpleDateFormat("MM-yyyy");
     String formattedDate = formatter.format(date);
-    int currentMonth = Integer.parseInt(formattedDate.substring(0,2));
-    int currentYear = Integer.parseInt(formattedDate.substring(3,7));
+    int currentMonth = Integer.parseInt(formattedDate.substring(0, 2));
+    int currentYear = Integer.parseInt(formattedDate.substring(3, 7));
 
     int queryMonth = currentMonth;
     int queryYear = currentYear;
@@ -62,7 +62,6 @@ public class wallet extends Fragment {
     private FirebaseFirestore db;
     private List<Transaction> transactionList;
     private TransactionAdapter adapter;
-
 
 
     public wallet() {
@@ -120,9 +119,7 @@ public class wallet extends Fragment {
         previousMonthBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (currentMonth > queryMonth && currentYear >= queryYear) {
-                    nextMonthBTN.setEnabled(true);
-                }
+                nextMonthBTN.setEnabled(true);
                 if (queryMonth == 0) {
                     queryMonth = 12;
                     queryYear--;
@@ -166,17 +163,20 @@ public class wallet extends Fragment {
         adapter = new TransactionAdapter(transactionsQuery, displayTV);
         recyclerView.setAdapter(adapter);
 
-        getTotal(documentName, new Budget.TotalCallback() {
+        getTotal(documentName, new TotalCallback() {
             @Override
-            public void onTotal(float total) {
+            public void onTotal(float[] values) {
+                float total = values[0];
+                float income = values[1];
+                Log.d("income", "onTotal: " + income);
                 totalExpense = total;
-                shoBalanceTextView.setText(String.valueOf(balance));
-                availableBalanceTextView.setText(String.valueOf(Float.parseFloat(balance)-totalExpense));
+                shoBalanceTextView.setText(String.valueOf(balance + income));
+                availableBalanceTextView.setText(String.valueOf(Float.parseFloat(balance) + totalExpense));
             }
         });
     }
 
-    public void getTotal(String documentName, Budget.TotalCallback callback) {
+    public void getTotal(String documentName, TotalCallback callback) {
         DocumentReference transactionsCollectionRef = db.collection("transactions").document(id);
         // Query the collection
         Query transactionsQuery = transactionsCollectionRef.collection(documentName);
@@ -185,25 +185,28 @@ public class wallet extends Fragment {
             public void onEvent(QuerySnapshot querySnapshot, FirebaseFirestoreException error) {
                 if (error != null) {
                     Log.e("Firestore error", error.getMessage());
-                    callback.onTotal(0); // Notify the callback with the default value in case of an error
+                    callback.onTotal(new float[]{0, 0}); // Notify the callback with the default value in case of an error
                     return;
                 }
                 float total = 0;
+                float income = 0;
                 for (QueryDocumentSnapshot doc : querySnapshot) {
-                    if (doc.get("amount") != null) {
+                    Log.d("query", "onEvent: "+doc.get("category").toString());
+                    if (doc.get("category").toString().equals("Income")) {
+                        Log.d("query", "onEvent: "+doc.get("category").toString());
+                        income += Float.parseFloat(doc.get("amount").toString());
+                    } else if (doc.get("amount") != null) {
                         total += Float.parseFloat(doc.get("amount").toString());
                     }
                 }
-                callback.onTotal(total); // Notify the callback with the calculated total value
+                callback.onTotal(new float[]{total, income});
             }
         });
     }
 
     public interface TotalCallback {
-        void onTotal(float total);
+        void onTotal(float[] values);
     }
-
-
 
 
 }
