@@ -1,12 +1,8 @@
 package com.example.budgetapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class HistoryActivity extends AppCompatActivity {
 
@@ -16,4 +12,18 @@ public class HistoryActivity extends AppCompatActivity {
 
         setContentView(R.layout.start_up_page);
     }
+
+    //display history info
+    //link to tutorial
+    //https://www.youtube.com/watch?v=xGsQXtaeI1A&ab_channel=CodeWithMazn
+//    private val _result = MutableLiveData<Exception?>()
+//    val result: liveData<Exception?> get() = _result
+//
+//    private val firstName = MutableLiveData<firstName> ()
+//    val name: LiveData<firstName> get() = firstName
+//
+//    private val childEventListener = object: childEventListener{
+//
+//    }
+
 }

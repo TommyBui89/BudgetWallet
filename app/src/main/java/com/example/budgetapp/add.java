@@ -1,9 +1,6 @@
 package com.example.budgetapp;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +10,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.squareup.picasso.Picasso;
-
-import org.checkerframework.checker.units.qual.A;
+import androidx.fragment.app.Fragment;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -23,8 +18,7 @@ public class add extends Fragment {
     String url,firstName, lastName,email,phone,password;
     CircleImageView avatar;
     TextView name;
-
-
+    
     //drop down list
     String[] item = {"Deposit", "Withdraw"};
     AutoCompleteTextView autoCompleteTextView;
@@ -56,7 +50,7 @@ public class add extends Fragment {
             phone = bundle.getString("phone");
             email = bundle.getString("email");
         }
-//drop down list
+        //drop down list
         autoCompleteTextView = view.findViewById(R.id.auto_complete_textview);
         adapterItems=new ArrayAdapter<String>(requireContext(),R.layout.list_item,item);
 
