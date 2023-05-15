@@ -80,7 +80,14 @@ public class user extends Fragment {
             id = bundle.getString("id");
         }
 
-        Log.d("TAG", "onCreateView: " + url + " " + firstName + " " + lastName + " " + password + " " + email + " " + budget + " " + balance + " " + phone + " " + id);
+        if (email == null) {
+            email = "Please Use Google To Sign In";
+            password = "Please Use Google To Sign In";
+            //disable text fields
+            usernamefield.setEnabled(false);
+            passwordfield.setEnabled(false);
+
+        }
 
         usernamefield.setText(email);
         passwordfield.setText(password);

@@ -41,5 +41,6 @@
     <string name="name_of_user">Name Of User</string>
     <string name="previousBtn">≤</string>
     <string name="nextBtn">≥</string>
+    <string name="forgot_password">Forgot Password?</string>
 
 </resources>

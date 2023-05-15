@@ -24,6 +24,8 @@ import android.widget.Toast;
 
 import com.canhub.cropper.CropImage;
 import com.example.budgetapp.Model.Users;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -32,11 +34,14 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -75,6 +80,39 @@ public class StartUpActivity extends AppCompatActivity {
 
         profileImageView = findViewById(R.id.avt);
 
+        Bundle bundle = getIntent().getExtras();
+        String googleNoti = bundle.getString("google");
+
+        if (googleNoti != null) {
+
+            GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+
+
+            DocumentReference documentRef = FirebaseFirestore.getInstance().collection("UserCollection").document(mAuth.getCurrentUser().getUid());
+            documentRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    String budget = task.getResult().getString("budget");
+                    String balance = task.getResult().getString("balance");
+                    if (budget != null) {
+                        Intent intent = new Intent(StartUpActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        budgetID.setText(budget);
+                        balanceID.setText(balance);
+                    }
+                }
+            });
+
+            if (account != null) {
+                firstNameID.setText(account.getGivenName());
+                givennameID.setText(account.getFamilyName());
+                imageURL = account.getPhotoUrl();
+                Picasso.get().load(imageURL).into(profileImageView);
+            }
+        }
+
         profileImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,6 +125,8 @@ public class StartUpActivity extends AppCompatActivity {
         startBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startBTN.setEnabled(false);
+
 
 
                 String firstName, givenName, phone, budget, balance;
@@ -118,7 +158,11 @@ public class StartUpActivity extends AppCompatActivity {
                     return;
                 }
 
-                uploadImage();
+                uploadImage(profileImageView);
+
+                ProgressDialog progressDialog = new ProgressDialog(StartUpActivity.this);
+                progressDialog.setTitle("Loading");
+                progressDialog.setMessage("Successful");
             }
         });
 
@@ -160,6 +204,8 @@ public class StartUpActivity extends AppCompatActivity {
     private void syncToFirestore(String url) {
 
         Bundle bundle = getIntent().getExtras();
+        String google = bundle.getString("google");
+
 
         Users user = new Users();
         user.setFirstName(firstNameID.getText().toString());
@@ -172,6 +218,10 @@ public class StartUpActivity extends AppCompatActivity {
         user.setBalance(balanceID.getText().toString());
         user.setProfilePic(url);
 
+        if (google != null) {
+            user.setUserID(mAuth.getCurrentUser().getUid());
+        }
+
         CollectionReference usersRef = db.collection("UserCollection");
         usersRef.document(user.getUserID()).set(user);
 
@@ -179,39 +229,50 @@ public class StartUpActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void uploadImage() {
-        if (imageURL == null) {
-            // If no image is selected, upload the default image
-            Drawable drawable = getResources().getDrawable(R.drawable.user);
-            Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+    private void uploadImage(CircleImageView profileImageView) {
+
+        Bundle bundle = getIntent().getExtras();
+        String googleNoti = bundle.getString("google");
+
+        if (googleNoti != null) {
+
+            Bitmap bitmap = null;
+            Drawable drawable = profileImageView.getDrawable();
+            bitmap = ((BitmapDrawable) drawable).getBitmap();
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
             byte[] data = baos.toByteArray();
 
-            FirebaseStorage.getInstance().getReference("image/" + UUID.randomUUID()).putBytes(data)
-                .addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            task.getResult().getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Uri> task) {
-                                    if (task.isSuccessful()) {
-                                        syncToFirestore(task.getResult().toString());
-                                    } else {
-                                        Toast.makeText(StartUpActivity.this, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                                    }
+            FirebaseStorage.getInstance().getReference("image/" + UUID.randomUUID()).putBytes(data).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        task.getResult().getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Uri> task) {
+                                if (task.isSuccessful()) {
+                                    syncToFirestore(task.getResult().toString());
+                                } else {
+                                    Toast.makeText(StartUpActivity.this, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                                 }
-                            });
-                        } else {
-                            Toast.makeText(StartUpActivity.this, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                        }
+                            }
+                        });
+                    } else {
+                        Toast.makeText(StartUpActivity.this, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                     }
-                });
+                }
+            });
+
         } else {
-            // If an image is selected, upload it
-            FirebaseStorage.getInstance().getReference("image/" + UUID.randomUUID()).putFile(imageURL)
-                .addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+            if (imageURL == null) {
+                // If no image is selected, upload the default image
+                Drawable drawable = getResources().getDrawable(R.drawable.user);
+                Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                byte[] data = baos.toByteArray();
+
+                FirebaseStorage.getInstance().getReference("image/" + UUID.randomUUID()).putBytes(data).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                         if (task.isSuccessful()) {
@@ -230,6 +291,28 @@ public class StartUpActivity extends AppCompatActivity {
                         }
                     }
                 });
+            } else {
+                // If an image is selected, upload it
+                FirebaseStorage.getInstance().getReference("image/" + UUID.randomUUID()).putFile(imageURL).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            task.getResult().getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Uri> task) {
+                                    if (task.isSuccessful()) {
+                                        syncToFirestore(task.getResult().toString());
+                                    } else {
+                                        Toast.makeText(StartUpActivity.this, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                        } else {
+                            Toast.makeText(StartUpActivity.this, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
         }
     }
 

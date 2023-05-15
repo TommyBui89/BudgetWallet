@@ -48,9 +48,6 @@ public class LoginActivity extends AppCompatActivity {
         googleBTN = findViewById(R.id.GoogleButton);
 
         mAuth = FirebaseAuth.getInstance();
-        progressDialog = new ProgressDialog(LoginActivity.this);
-        progressDialog.setTitle("Creating Account");
-        progressDialog.setMessage("We are creating account");
 
         GoogleSignInOptions gso =new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(com.firebase.ui.auth.R.string.default_web_client_id)).requestEmail().build();
         mGoogleSignInClient = GoogleSignIn.getClient(this,gso);
@@ -58,7 +55,12 @@ public class LoginActivity extends AppCompatActivity {
         googleBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+                ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
+                progressDialog.setTitle("Loading");
                 signInUsingGoogle();
+                progressDialog.setMessage("Successful");
             }
         });
         loginBTNID.setOnClickListener(new View.OnClickListener() {
@@ -115,8 +117,15 @@ public class LoginActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
                     FirebaseUser user=mAuth.getCurrentUser();
+                    Bundle googleNoti = new Bundle();
 
-                    mainScrChange();
+                    Intent intent = new Intent(LoginActivity.this, StartUpActivity.class);
+
+
+                    googleNoti.putString("google", "true");
+                    intent.putExtras(googleNoti);
+                    startActivity(intent);
+
                 }
             }
         });
@@ -131,4 +140,5 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
     }
+
 }
