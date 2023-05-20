@@ -3,6 +3,9 @@ package com.example.budgetapp;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -30,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     TextInputEditText emailID, passwordID;
     Button loginBTNID,googleBTN;
+    boolean isPassVisible = false;
     ProgressDialog progressDialog;
 
     GoogleSignInClient mGoogleSignInClient;
@@ -37,8 +41,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-        //Remember to comment the code below
         setContentView(R.layout.sign_in_page);
 
         // Initialize the variables
@@ -51,6 +53,32 @@ public class LoginActivity extends AppCompatActivity {
 
         GoogleSignInOptions gso =new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(com.firebase.ui.auth.R.string.default_web_client_id)).requestEmail().build();
         mGoogleSignInClient = GoogleSignIn.getClient(this,gso);
+
+        //lister to eye icon click
+        passwordID.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                final int DRAWABLE_RIGHT = 2;
+                if(event.getAction() == MotionEvent.ACTION_UP){
+                    if(event.getRawX() >= (passwordID.getRight() - passwordID.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())){
+                        if(isPassVisible){
+                            //change the eye
+                            passwordID.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.eye_slash_solid, 0);
+                            //hide the password
+                            passwordID.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                            isPassVisible = false;
+                        }else{
+                            //change the eye
+                            passwordID.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.eye_solid, 0);
+                            //show the password
+                            passwordID.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                            isPassVisible = true;
+                        }
+                    }
+                }
+                return false;
+            }
+        });
 
         googleBTN.setOnClickListener(new View.OnClickListener() {
             @Override

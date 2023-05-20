@@ -67,7 +67,11 @@
                 android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/password"/>
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                app:passwordToggleEnabled="true"
+                android:drawableRight="@drawable/eye_slash_solid"
+                android:drawablePadding="8dp"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -78,7 +82,11 @@
                 android:id="@+id/confirmPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/confirmPassword"/>
+                android:hint="@string/confirmPassword"
+                android:inputType="textPassword"
+                app:passwordToggleEnabled="true"
+                android:drawableRight="@drawable/eye_slash_solid"
+                android:drawablePadding="8dp"/>
         </com.google.android.material.textfield.TextInputLayout>
 
 

@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textSize="18sp"
+            android:textSize="30dp"
             android:visibility="gone" />
 
         <LinearLayout
@@ -61,7 +61,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="TextView" />
+                android:text="TextView"
+                android:textSize="20dp"/>
 
             <Button
                 android:id="@+id/NextMonth"

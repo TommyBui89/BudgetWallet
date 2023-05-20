@@ -1,7 +1,7 @@
 package com.example.budgetapp.Model;
 
 public class Users {
-    String userID, profilePic, firstName, lastName, phone, email, password, budget, balance;
+    String userID, profilePic, firstName, lastName, phone, email, password, budget;
 
     public Users(String userID, String profilePic, String firstName, String lastName, String phone, String email, String password) {
         this.userID = userID;
@@ -77,13 +77,6 @@ public class Users {
         this.budget = budget;
     }
 
-    public String getBalance() {
-        return balance;
-    }
-
-    public void setBalance(String balance) {
-        this.balance = balance;
-    }
 
     public Users() {
     }

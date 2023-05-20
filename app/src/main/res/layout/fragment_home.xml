@@ -19,15 +19,17 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:background="#3498DB"
-            android:orientation="horizontal">
+            android:background="#6750a4"
+            android:orientation="horizontal"
+            android:paddingHorizontal="5dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/avt"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
-                app:srcCompat="@drawable/user" />
+                app:srcCompat="@drawable/user"
+            android:layout_margin="10dp"/>
 
             <TextView
                 android:id="@+id/UsernameText"
@@ -66,13 +68,32 @@
             android:textSize="34sp" />
 
         <TextView
-            android:id="@+id/DaysLeft"
+            android:id="@+id/textView17"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Budget Wallet"
             android:textColor="#000000"
             android:textSize="34sp" />
+        <TextView
+            android:id="@+id/Greeting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Happy"
+            android:textColor="#000000"
+            android:textSize="28sp"
+            android:layout_marginTop="20dp"/>
+
+        <TextView
+            android:id="@+id/DaysLeft"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Day lefts"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:layout_marginTop="20dp"/>
     </LinearLayout>
 
 </FrameLayout>

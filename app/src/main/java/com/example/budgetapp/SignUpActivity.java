@@ -8,7 +8,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -34,6 +37,8 @@ public class SignUpActivity extends AppCompatActivity {
     TextInputEditText emailID, passwordID, confirmPasswordID;
     String userDBID;
     Button signUpBTN;
+    boolean isPassVisible = false;
+    boolean isConfirmPassVisible = false;
 
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -49,6 +54,55 @@ public class SignUpActivity extends AppCompatActivity {
         confirmPasswordID = findViewById(R.id.confirmPassword);
         signUpBTN = findViewById(R.id.SignUpButton);
 
+
+        passwordID.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                final int DRAWABLE_RIGHT = 2;
+                if(event.getAction() == MotionEvent.ACTION_UP){
+                    if(event.getRawX() >= (passwordID.getRight() - passwordID.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())){
+                        if(isPassVisible){
+                            //change the eye
+                            passwordID.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.eye_slash_solid, 0);
+                            //hide the password
+                            passwordID.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                            isPassVisible = false;
+                        }else{
+                            //change the eye
+                            passwordID.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.eye_solid, 0);
+                            //show the password
+                            passwordID.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                            isPassVisible = true;
+                        }
+                    }
+                }
+                return false;
+            }
+        });
+        confirmPasswordID.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                final int DRAWABLE_RIGHT = 2;
+                if(event.getAction() == MotionEvent.ACTION_UP){
+                    if(event.getRawX() >= (confirmPasswordID.getRight() - confirmPasswordID.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())){
+                        if(isConfirmPassVisible){
+                            //change the eye
+                            confirmPasswordID.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.eye_slash_solid, 0);
+                            //hide the password
+                            confirmPasswordID.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                            isConfirmPassVisible = false;
+                        }else{
+                            //change the eye
+                            confirmPasswordID.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.eye_solid, 0);
+                            //show the password
+                            confirmPasswordID.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                            isConfirmPassVisible = true;
+                        }
+                    }
+                }
+                return false;
+            }
+        });
         signUpBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,6 +151,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     public void signInScrChange(View view) {
+        startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
         finish();
     }
 

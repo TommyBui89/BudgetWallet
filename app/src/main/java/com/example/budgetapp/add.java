@@ -114,7 +114,6 @@ public class add extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String item = adapterView.getItemAtPosition(i).toString();
-                Toast.makeText(getContext(), "item " + item, Toast.LENGTH_SHORT).show();
             }
         });
 

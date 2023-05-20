@@ -53,7 +53,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class StartUpActivity extends AppCompatActivity {
 
-    TextInputEditText firstNameID, givennameID, phoneID, budgetID, balanceID;
+    TextInputEditText firstNameID, givennameID, phoneID, budgetID;
     Button startBTN;
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -74,7 +74,6 @@ public class StartUpActivity extends AppCompatActivity {
         givennameID = findViewById(R.id.givenName);
         phoneID = findViewById(R.id.phone);
         budgetID = findViewById(R.id.Budget);
-        balanceID = findViewById(R.id.Balance);
 
         startBTN = findViewById(R.id.StartButton);
 
@@ -93,14 +92,12 @@ public class StartUpActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     String budget = task.getResult().getString("budget");
-                    String balance = task.getResult().getString("balance");
                     if (budget != null) {
                         Intent intent = new Intent(StartUpActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();
                     } else {
                         budgetID.setText(budget);
-                        balanceID.setText(balance);
                     }
                 }
             });
@@ -129,11 +126,10 @@ public class StartUpActivity extends AppCompatActivity {
 
 
 
-                String firstName, givenName, phone, budget, balance;
+                String firstName, givenName, phone, budget;
                 firstName = String.valueOf(firstNameID.getText());
                 givenName = String.valueOf(givennameID.getText());
                 budget = String.valueOf(budgetID.getText());
-                balance = String.valueOf(balanceID.getText());
                 phone = String.valueOf(phoneID.getText());
 
 
@@ -151,10 +147,6 @@ public class StartUpActivity extends AppCompatActivity {
                 }
                 if (TextUtils.isEmpty(budget)) {
                     Toast.makeText(StartUpActivity.this, "Please enter your budget", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (TextUtils.isEmpty(balance)) {
-                    Toast.makeText(StartUpActivity.this, "Please enter your balance", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -215,7 +207,6 @@ public class StartUpActivity extends AppCompatActivity {
         user.setEmail(bundle.getString("email"));
         user.setPassword(bundle.getString("password"));
         user.setBudget(budgetID.getText().toString());
-        user.setBalance(balanceID.getText().toString());
         user.setProfilePic(url);
 
         if (google != null) {

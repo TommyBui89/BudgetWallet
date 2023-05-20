@@ -104,7 +104,6 @@ public class MainActivity extends AppCompatActivity {
             String email = document.getString("email");
             String id = document.getString("userID");
             String budget = document.getString("budget");
-            String balance = document.getString("balance");
 
             bundle.putString("url", url);
             bundle.putString("firstName", firstName);
@@ -114,7 +113,6 @@ public class MainActivity extends AppCompatActivity {
             bundle.putString("email", email);
             bundle.putString("id", id);
             bundle.putString("budget", budget);
-            bundle.putString("balance", balance);
         } else {
         }
     }

@@ -42,9 +42,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class wallet extends Fragment {
 
-    String url, firstName, lastName, email, phone, password, id, balance;
+    String url, firstName, lastName, email, phone, password, id, budget;
     Button nextMonthBTN, previousMonthBTN;
-    TextView monthTextView, displayTV, shoBalanceTextView, availableBalanceTextView;
+    TextView monthTextView, displayTV, shoBudgetTextView, availableBudgetTextView;
 
     Date date = new Date();
     SimpleDateFormat formatter = new SimpleDateFormat("MM-yyyy");
@@ -94,12 +94,12 @@ public class wallet extends Fragment {
             phone = bundle.getString("phone");
             email = bundle.getString("email");
             id = bundle.getString("id");
-            balance = bundle.getString("balance");
+            budget = bundle.getString("budget");
         }
 
         // Initialize
-        shoBalanceTextView = view.findViewById(R.id.ShoBalance);
-        availableBalanceTextView = view.findViewById(R.id.textView9);
+        shoBudgetTextView = view.findViewById(R.id.ShowBudget);
+        availableBudgetTextView = view.findViewById(R.id.AvailableBudget);
         monthTextView = view.findViewById(R.id.CurrentMonth);
         previousMonthBTN = view.findViewById(R.id.PreviousMonth);
         nextMonthBTN = view.findViewById(R.id.NextMonth);
@@ -168,10 +168,9 @@ public class wallet extends Fragment {
             public void onTotal(float[] values) {
                 float total = values[0];
                 float income = values[1];
-                Log.d("income", "onTotal: " + income);
                 totalExpense = total;
-                shoBalanceTextView.setText(String.valueOf(balance + income));
-                availableBalanceTextView.setText(String.valueOf(Float.parseFloat(balance) + totalExpense));
+                shoBudgetTextView.setText(String.valueOf(Float.parseFloat(budget) + income));
+                availableBudgetTextView.setText(String.valueOf(Float.parseFloat(budget) + totalExpense));
             }
         });
     }

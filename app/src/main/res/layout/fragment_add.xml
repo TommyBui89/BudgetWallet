@@ -80,7 +80,8 @@
             android:id="@+id/SubmitButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Submit" />
+            android:text="Submit"
+            android:layout_marginTop="30dp"/>
 
     </LinearLayout>
 

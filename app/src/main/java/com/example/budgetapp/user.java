@@ -1,17 +1,24 @@
 package com.example.budgetapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.budgetapp.Model.Users;
+import com.firebase.ui.auth.data.model.User;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,13 +27,15 @@ import com.google.firebase.auth.FirebaseAuth;
  */
 public class user extends Fragment {
 
-    // Declare the sign out button
-    private Button btnSignOut;
-    private FirebaseAuth mAuth; // Firebase Authentication instance
-    // ...
 
-    String url, email, password, firstName, lastName, phone, budget, id, balance;
-    TextInputEditText usernamefield, passwordfield, firstNamefield, lastNamefield, budgetfield, balancefield;
+    //Declare Variables
+    private Button btnSignOut, changeButton;
+    private FirebaseAuth mAuth;
+
+    String url, email, password, firstName, lastName, phone, budget, id;
+    TextInputEditText usernamefield, passwordfield, firstNamefield, lastNamefield, budgetfield;
+
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public static user newInstance() {
         user fragment = new user();
@@ -52,19 +61,7 @@ public class user extends Fragment {
         firstNamefield = view.findViewById(R.id.FirstNameTextbox);
         lastNamefield = view.findViewById(R.id.LastNameTextbox);
         budgetfield = view.findViewById(R.id.BudgetTextbox);
-        balancefield = view.findViewById(R.id.BalanceTextBox);
-
-
-        // Set a click listener for the sign out button
-        btnSignOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Call the signOut() method to sign out the user
-                mAuth.signOut();
-                // Optional: You can also navigate to your sign in activity or clear any user data here
-                startActivity(new Intent(getActivity(), LoginActivity.class));
-            }
-        });
+        changeButton = view.findViewById(R.id.ChangeBtn);
 
 
         Bundle bundle = getArguments();
@@ -75,9 +72,9 @@ public class user extends Fragment {
             password = bundle.getString("password");
             email = bundle.getString("email");
             budget = bundle.getString("budget");
-            balance = bundle.getString("balance");
             phone = bundle.getString("phone");
             id = bundle.getString("id");
+            url = bundle.getString("url");
         }
 
         if (email == null) {
@@ -94,10 +91,67 @@ public class user extends Fragment {
         firstNamefield.setText(firstName);
         lastNamefield.setText(lastName);
         budgetfield.setText(budget);
-        balancefield.setText(balance);
 
+
+        // Set a click listener for the sign out button
+        btnSignOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Call the signOut() method to sign out the user
+                mAuth.signOut();
+                // Optional: You can also navigate to your sign in activity or clear any user data here
+                startActivity(new Intent(getActivity(), LoginActivity.class));
+            }
+        });
+
+
+        //Set a click listener for the change button
+        changeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //get the text from the text fields
+                String newEmail = usernamefield.getText().toString();
+                String newPassword = passwordfield.getText().toString();
+                String newFirstName = firstNamefield.getText().toString();
+                String newLastName = lastNamefield.getText().toString();
+                String newBudget = budgetfield.getText().toString();
+
+                //create a new user object
+                Users user = new Users();
+                user.setEmail(newEmail);
+                user.setPassword(newPassword);
+                user.setFirstName(newFirstName);
+                user.setLastName(newLastName);
+                user.setBudget(newBudget);
+                user.setPhone(phone);
+                user.setProfilePic(url);
+                user.setUserID(id);
+
+
+                //update the user in the database
+                CollectionReference usersRef = db.collection("UserCollection");
+                usersRef.document(id).set(user);
+
+                Toast.makeText(getActivity(), "Change Successful", Toast.LENGTH_SHORT).show();
+                InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
+
+                //update bundle to share with fragments
+                bundle.putString("url", url);
+                bundle.putString("firstName", newFirstName);
+                bundle.putString("lastName", newLastName);
+                bundle.putString("password", newPassword);
+                bundle.putString("phone", phone);
+                bundle.putString("email", newEmail);
+                bundle.putString("id", id);
+                bundle.putString("budget", newBudget);
+
+            }
+        });
 
         return view;
     }
+
 }
 

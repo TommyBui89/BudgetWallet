@@ -68,7 +68,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                app:passwordToggleEnabled="true"/>
+                app:passwordToggleEnabled="true"
+                android:drawableRight="@drawable/eye_slash_solid"
+                android:drawablePadding="8dp"/>
         </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
@@ -121,12 +123,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/google" />
-
-        <Button
-            android:id="@+id/FacebookButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/facebook" />
     </LinearLayout>
 
     <LinearLayout

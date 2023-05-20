@@ -110,16 +110,14 @@ public class Budget extends Fragment {
         monthTextView = view.findViewById(R.id.CurrentMonth);
         previousMonthBTN = view.findViewById(R.id.PreviousMonth);
         nextMonthBTN = view.findViewById(R.id.NextMonth);
-
         noDataTextView = view.findViewById(R.id.noDataTextView);
+        pieChart = view.findViewById(R.id.pieChart);
 
+        // prepairing the month query
         queryMonthString = queryMonth + "-" + queryYear;
-
         monthTextView.setText(queryMonthString);
 
 
-        //Pie Chart
-        pieChart = view.findViewById(R.id.pieChart);
 
         getCategory(new CategoryCallback() {
             @Override
@@ -142,6 +140,7 @@ public class Budget extends Fragment {
         previousMonthBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //logic update month
                 if (queryMonth == 1) {
                     queryMonth = 12;
                     queryYear--;
@@ -151,6 +150,7 @@ public class Budget extends Fragment {
                 queryMonthString = queryMonth + "-" + queryYear;
                 monthTextView.setText(queryMonthString);
                 categoryMap.clear();
+
                 getCategory(new CategoryCallback() {
                     @Override
                     public void onCategories(List<String> categories) {
@@ -173,6 +173,7 @@ public class Budget extends Fragment {
         nextMonthBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //logic update month
                 if (queryMonth == 12) {
                     queryMonth = 1;
                     queryYear++;

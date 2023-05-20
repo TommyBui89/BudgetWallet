@@ -3,7 +3,7 @@
     <item android:title="Home"
         android:id="@+id/homeFrag"
         android:icon="@drawable/house_solid"/>
-    <item android:title="Wallet"
+    <item android:title="History"
         android:id="@+id/walletFrag"
         android:icon="@drawable/wallet_solid"/>
     <item android:title="Add"
