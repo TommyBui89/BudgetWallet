@@ -1,29 +1,23 @@
 package com.example.budgetapp;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
+
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-
-import androidx.fragment.app.Fragment;
-
-import com.squareup.picasso.Picasso;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Home#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class Home extends Fragment {
 
 
@@ -34,10 +28,6 @@ public class Home extends Fragment {
     public Home() {
     }
 
-    public static Home newInstance() {
-        Home fragment = new Home();
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

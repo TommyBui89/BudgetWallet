@@ -2,10 +2,6 @@ package com.example.budgetapp;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -52,9 +48,9 @@ public class MainActivity extends AppCompatActivity {
                     if (document.exists()) {
                         createBundleFromFirestore(document, bundle);
                         replaceFrame(new Home(), bundle);
-                    } else {
                     }
                 } else {
+                    Toast.makeText(MainActivity.this, "Error getting documents", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -113,7 +109,6 @@ public class MainActivity extends AppCompatActivity {
             bundle.putString("email", email);
             bundle.putString("id", id);
             bundle.putString("budget", budget);
-        } else {
         }
     }
 

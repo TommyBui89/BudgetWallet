@@ -1,12 +1,6 @@
 package com.example.budgetapp;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,9 +8,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.budgetapp.Model.Transaction;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -24,22 +19,10 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.android.gms.tasks.OnCompleteListener;
-
-import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link wallet#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class wallet extends Fragment {
 
     String url, firstName, lastName, email, phone, password, id, budget;
@@ -60,18 +43,12 @@ public class wallet extends Fragment {
 
 
     private FirebaseFirestore db;
-    private List<Transaction> transactionList;
     private TransactionAdapter adapter;
 
 
     public wallet() {
         // Required empty public constructor
 
-    }
-
-    public static wallet newInstance() {
-        wallet fragment = new wallet();
-        return fragment;
     }
 
     @Override
@@ -159,7 +136,7 @@ public class wallet extends Fragment {
 
         DocumentReference transactionsCollectionRef = db.collection("transactions").document(id);
         // Query the collection and update the adapter
-        Query transactionsQuery = db.collection("transactions").document(id).collection(documentName).orderBy("dateinSeconds", Query.Direction.DESCENDING);
+        Query transactionsQuery = transactionsCollectionRef.collection(documentName).orderBy("dateinSeconds", Query.Direction.DESCENDING);
         adapter = new TransactionAdapter(transactionsQuery, displayTV);
         recyclerView.setAdapter(adapter);
 
@@ -170,7 +147,7 @@ public class wallet extends Fragment {
                 float income = values[1];
                 totalExpense = total;
                 shoBudgetTextView.setText(String.valueOf(Float.parseFloat(budget) + income));
-                availableBudgetTextView.setText(String.valueOf(Float.parseFloat(budget) + totalExpense));
+                availableBudgetTextView.setText(String.valueOf(Float.parseFloat(budget)+ income + totalExpense)); // Expense stored in DB is negative
             }
         });
     }

@@ -1,20 +1,15 @@
 package com.example.budgetapp;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
@@ -22,13 +17,9 @@ import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -45,19 +36,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Budget#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class Budget extends Fragment {
 
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String url, email, password, firstName, lastName, phone, budget, id, balance;
     PieChart pieChart;
-    CircleImageView avatar;
-    TextView name;
     Button nextMonthBTN, previousMonthBTN;
     TextView monthTextView, noDataTextView;
 
@@ -75,11 +59,6 @@ public class Budget extends Fragment {
 
     public Budget() {
         // Required empty public constructor
-    }
-
-    public static Budget newInstance() {
-        Budget fragment = new Budget();
-        return fragment;
     }
 
     @Override

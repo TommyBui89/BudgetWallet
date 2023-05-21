@@ -1,6 +1,5 @@
 package com.example.budgetapp;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
@@ -34,7 +33,6 @@ public class LoginActivity extends AppCompatActivity {
     TextInputEditText emailID, passwordID;
     Button loginBTNID,googleBTN;
     boolean isPassVisible = false;
-    ProgressDialog progressDialog;
 
     GoogleSignInClient mGoogleSignInClient;
     @Override
@@ -83,12 +81,7 @@ public class LoginActivity extends AppCompatActivity {
         googleBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
-                ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
-                progressDialog.setTitle("Loading");
                 signInUsingGoogle();
-                progressDialog.setMessage("Successful");
             }
         });
         loginBTNID.setOnClickListener(new View.OnClickListener() {

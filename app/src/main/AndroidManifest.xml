@@ -14,27 +14,34 @@
         android:theme="@style/Theme.Material3.Light.NoActionBar"
         tools:targetApi="31">
         <activity
-            android:name=".StartUpActivity"
-            android:exported="false" />
-        <activity
             android:name=".SplashScreen"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity"
+        <activity
+            android:name=".LoginActivity"
             android:exported="false"
-            android:noHistory="true"/>
+            android:noHistory="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
-            android:exported="false"/>
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".SignUpActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".StartUpActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

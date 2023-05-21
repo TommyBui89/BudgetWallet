@@ -3,7 +3,6 @@ package com.example.budgetapp;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,17 +13,11 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.example.budgetapp.Model.Users;
-import com.firebase.ui.auth.data.model.User;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link user#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class user extends Fragment {
 
 
@@ -37,10 +30,6 @@ public class user extends Fragment {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    public static user newInstance() {
-        user fragment = new user();
-        return fragment;
-    }
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
