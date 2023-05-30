@@ -109,9 +109,6 @@ public class StartUpActivity extends AppCompatActivity {
         startBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startBTN.setEnabled(false);
-
-
 
                 String firstName, givenName, phone, budget;
                 firstName = String.valueOf(firstNameID.getText());
@@ -137,6 +134,7 @@ public class StartUpActivity extends AppCompatActivity {
                     return;
                 }
 
+                startBTN.setEnabled(false);
                 uploadImage(profileImageView);
 
                 ProgressDialog progressDialog = new ProgressDialog(StartUpActivity.this);
